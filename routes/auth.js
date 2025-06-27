@@ -16,10 +16,12 @@ router.post('/login', (req, res, next) => {
 });
 
 // Logout
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', 'Has cerrado sesión');
-  res.redirect('/auth/login');
+router.get('/logout', (req, res, next) => {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    req.flash('success_msg', 'Has cerrado sesión');
+    res.redirect('/auth/login');
+  });
 });
 
 module.exports = router;
